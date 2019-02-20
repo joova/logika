@@ -1,4 +1,6 @@
 
+import 'dart:html';
+
 import 'package:angular/angular.dart';
 
 import 'package:angular_components/app_layout/material_persistent_drawer.dart';
@@ -9,9 +11,10 @@ import 'package:angular_components/material_icon/material_icon.dart';
 import 'package:angular_components/material_list/material_list.dart';
 import 'package:angular_components/material_list/material_list_item.dart';
 import 'package:angular_components/material_toggle/material_toggle.dart';
-import 'package:logika/src/dashboard/dashboard_component.dart';
+import 'package:angular_router/angular_router.dart';
 import 'package:logika/src/logger_service.dart';
-import 'package:logika/src/todo_list/todo_list_component.dart';
+import 'package:logika/src/routes.dart';
+import 'package:logika/src/route_paths.dart';
 
 
 // AngularDart info: https://webdev.dartlang.org/angular
@@ -33,12 +36,10 @@ import 'package:logika/src/todo_list/todo_list_component.dart';
     MaterialToggleComponent,
     MaterialListComponent,
     MaterialListItemComponent,
-    NgSwitch,
-    NgSwitchWhen,
-    TodoListComponent,
-    DashboardComponent,
+    routerDirectives,
   ],
-  providers: [ClassProvider(Logger)]
+  providers: [ClassProvider(Logger)],
+  exports: [RoutePaths, Routes],
 )
 class AppComponent {
   final Logger _logger;
@@ -47,12 +48,35 @@ class AppComponent {
   bool end = false;
   bool overlay = false;
 
-  String component = 'dashboard';
-
+  
   AppComponent(this._logger);
 
-  void switchComponent(String comp){
-    _logger.log('switchComponent $comp');
-    this.component = comp;
+  void w3_open() {
+    // _logger.log("w3 open ....");
+    // Get the Sidebar
+    var mySidebar = querySelector("#mySidebar");
+
+    // Get the DIV with overlay effect
+    var overlayBg = querySelector("#myOverlay");
+
+    if (mySidebar.style.display == 'block') {
+            mySidebar.style.display = 'none';
+            overlayBg.style.display = "none";
+        } else {
+            mySidebar.style.display = 'block';
+            overlayBg.style.display = "block";
+        }
   }
+
+  void w3_close() {
+    // _logger.log("w3 open ....");
+    // Get the Sidebar
+    var mySidebar = querySelector("#mySidebar");
+
+    // Get the DIV with overlay effect
+    var overlayBg = querySelector("#myOverlay");
+    mySidebar.style.display = 'none';
+    overlayBg.style.display = "none";
+  }
+
 }

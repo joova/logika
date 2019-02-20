@@ -1,52 +1,57 @@
-<material-drawer persistent #drawer="drawer" [class.custom-width]="customWidth" [attr.end]="end ? '' : null" [attr.overlay]="overlay ? '' : null">
-    <material-list *deferredContent>
-        <!-- <div group class="mat-drawer-spacer">
-        </div> -->
-        <div group>
-            <div label>Inbound</div>
-            <material-list-item (trigger)="switchComponent('todo-list')">
-                <material-icon icon="inbox"></material-icon>Purchase Order
-            </material-list-item>
-            <material-list-item>
-                <material-icon icon="star"></material-icon>Receiving
-            </material-list-item>
-            <material-list-item>
-                <material-icon icon="send"></material-icon>Handling
-            </material-list-item>
-            <material-list-item>
-                <material-icon icon="drafts"></material-icon>Putaway
-            </material-list-item>
-        </div>
-        <div group>
-            <div label>Outbound</div>
-            <material-list-item>
-                <material-icon icon="star"></material-icon>Picking
-            </material-list-item>
-        </div>
-    </material-list>
-</material-drawer>
+<!-- Top container -->
+<div class="w3-bar w3-top w3-black w3-large" style="z-index:4">
+    <button class="w3-bar-item w3-button w3-hide-large w3-hover-none w3-hover-text-light-grey" (click)="w3_open()"><i
+            class="fa fa-bars"></i>  Menu</button>
+    <span class="w3-bar-item w3-right">Logika</span>
+</div>
 
-<material-content>
-    <header class="material-header shadow">
-        <div class="material-header-row">
-            <material-button icon class="material-drawer-button" (trigger)="drawer.toggle()">
-                <material-icon icon="menu"></material-icon>
-            </material-button>
-            <span class="material-header-title">Logika</span>
-            <div class="material-spacer"></div>
-            <nav class="material-navigation">
-                <a>Link 1</a>
-            </nav>
-            <nav class="material-navigation">
-                <a>Link 2</a>
-            </nav>
-            <nav class="material-navigation">
-                <a>Link 3</a>
-            </nav>
+<!-- Sidebar/menu -->
+<nav class="w3-sidebar w3-collapse w3-white w3-animate-left" style="padding-top:48px;z-index:3;width:300px;" id="mySidebar"><br>
+    <div class="w3-container w3-row">
+        <div class="w3-col s4">
+            <img src="https://www.w3schools.com/w3images/avatar2.png" class="w3-circle w3-margin-right" style="width:46px">
         </div>
-    </header>
-    <div [ngSwitch]="component">
-        <dashboard *ngSwitchCase="'dashboard'"></dashboard>
-        <todo-list *ngSwitchCase="'todo-list'"></todo-list>
+        <div class="w3-col s8 w3-bar">
+            <span>Welcome, <strong>Gues</strong></span><br>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-envelope"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-user"></i></a>
+            <a href="#" class="w3-bar-item w3-button"><i class="fa fa-cog"></i></a>
+        </div>
     </div>
-</material-content>
+    <hr>
+    <div class="w3-container">
+        <h5>Main Menu</h5>
+    </div>
+    <div class="w3-bar-block">
+        <a href="#" class="w3-bar-item w3-button w3-padding-16 w3-hide-large w3-dark-grey w3-hover-black" (click)="w3_close()"
+            title="close menu"><i class="fa fa-remove fa-fw"></i>  Close Menu</a>
+        <a [routerLink]="RoutePaths.dashboard.toUrl()" class="w3-bar-item w3-button w3-padding">
+            <i class="fa fa-tachometer fa-fw"></i>  Dashboard
+        </a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-eye fa-fw"></i>  Views</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-truck fa-fw"></i>  Traffic</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bullseye fa-fw"></i>  Geo</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-gift fa-fw"></i>  Orders</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bell fa-fw"></i>  News</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-bank fa-fw"></i>  General</a>
+        <a href="#" class="w3-bar-item w3-button w3-padding"><i class="fa fa-history fa-fw"></i>  History</a>
+        <a [routerLink]="RoutePaths.setting.toUrl()" class="w3-bar-item w3-button w3-padding">
+            <i class="fa fa-cog fa-fw"></i>  Settings
+        </a>
+        <br><br>
+    </div>
+</nav>
+
+
+<!-- Overlay effect when opening sidebar on small screens -->
+<div class="w3-overlay w3-hide-large w3-animate-opacity" (click)="w3_close()" style="cursor:pointer" title="close side menu"
+    id="myOverlay"></div>
+<!-- !PAGE CONTENT! -->
+<div class="w3-main" style="margin-left:300px;margin-top:43px;">
+
+    <router-outlet [routes]="Routes.all"></router-outlet>
+
+    <!-- End page content -->
+</div>
+
+

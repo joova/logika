@@ -1,21 +1,21 @@
-ul {
+/* table {
   list-style: none;
   padding-left: 0;
-}
+} */
 
-li {
+tr {
   line-height: 3em;
 }
 
-li:hover {
+tr:hover {
   background-color: #EEEEEE;
 }
 
-li material-checkbox {
+/* tr material-checkbox {
   vertical-align: middle;
-}
+} */
 
-li material-fab {
+tr material-fab {
   float: right;
   vertical-align: middle;
 }

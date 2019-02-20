@@ -1,10 +1,6 @@
-import 'dart:async';
-
 import 'dart:html';
-import 'dart:math' as math;
 
 import 'package:chartjs/chartjs.dart';
-
 
 import 'package:angular/angular.dart';
 import 'package:angular_components/angular_components.dart';
@@ -14,7 +10,10 @@ import 'dashboard_service.dart';
 
 @Component(
   selector: 'dashboard',
-  styleUrls: ['dashboard_component.css'],
+  styleUrls: [
+    'package:angular_components/css/mdc_web/card/mdc-card.scss.css',
+    'dashboard_component.css'
+    ],
   templateUrl: 'dashboard_component.html',
   directives: [
     MaterialCheckboxComponent,
@@ -24,24 +23,28 @@ import 'dashboard_service.dart';
     NgFor,
     NgIf,
   ],
-  providers: [
-    ClassProvider(DashboardService),
-    ClassProvider(Logger)
-  ],
+  providers: [ClassProvider(DashboardService), ClassProvider(Logger)],
 )
-class DashboardComponent implements OnInit {
+
+class DashboardComponent implements AfterContentInit, AfterViewInit  {
+
   final Logger _logger;
   final DashboardService dashboardService;
-
-  DashboardComponent(this._logger, this.dashboardService);
-
-  var rnd = math.Random();
-  var months = <String>['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
-  var data1 = <int>[80, 20, 30, 40, 10, 6, 18, 76, 13, 32, 21, 97];
-  var data2 = <int>[37, 89, 12, 65, 50, 15, 54, 46, 65, 30, 57, 19];
+  
+  Element _element;
+  DashboardComponent(this._element, this._logger, this.dashboardService);
 
   @override
-  Future<Null> ngOnInit() async {
+  void ngAfterViewInit() {
+    _logger.log("after view init ...");
+    // var rnd = math.Random();
+    var months = <String>[
+      'Jan', 'Feb', 'Mar', 'Apr',
+      'Mei', 'Jun', 'Jul', 'Agu',
+      'Sep', 'Okt', 'Nov', 'Des'
+    ];
+    var data1 = <int>[80, 20, 30, 40, 10, 6, 18, 76, 13, 32, 21, 97];
+    var data2 = <int>[37, 89, 12, 65, 50, 15, 54, 46, 65, 30, 57, 19];
     var data = LinearChartData(labels: months, datasets: <ChartDataSets>[
       ChartDataSets(
           label: 'Inbound',
@@ -54,12 +57,18 @@ class DashboardComponent implements OnInit {
     ]);
 
     var config = ChartConfiguration(
-        type: 'line', data: data, options: ChartOptions(responsive: true));
-
-    var canvas = querySelector('#canvas') as CanvasElement;
-    _logger.log('canvas' + canvas.width.toString());
+      type: 'line', data: data, options: ChartOptions(responsive: true));
     
-    Chart(canvas, config);
+    var canvas = _element.querySelector("#canvas");
+    _logger.log(canvas);
+    // Chart(canvas, config);
+  }
+
+  @override
+  void ngAfterContentInit() {
+    _logger.log("after content init ...");
+    // canvas =  querySelector('#canvas') as CanvasElement;
+    // _logger.log(canvasEl);
   }
 
 }

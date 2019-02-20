@@ -1,0 +1,74 @@
+<modal [(visible)]="showAddUserDialog">
+  <material-dialog headered class="headered-dialog">
+    <div header>
+      <h1>Add/Edit User</h1>
+    </div>
+    <material-input label="Username" type ="email"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="user.username">
+    </material-input>
+    <material-input label="Password" type="password" required floatingLabel style="width:100%" [(ngModel)]="user.password"
+      (keyup.enter)="add()">
+    </material-input>
+
+    <div footer>
+      <button class="w3-btn w3-green" *ngIf="user.id == null" (click)="add()" [disabled]="user.username == null">
+        Create
+      </button>
+
+      <button class="w3-btn w3-green" *ngIf="user.id != null" (click)="update()" [disabled]="user.username == null">
+        Update
+      </button>
+      &nbsp;
+      <button class="w3-btn w3-red" (click)="showAddUserDialog=false">
+        Close
+      </button>
+    </div>
+  </material-dialog>
+</modal>
+
+
+<br>
+
+
+<div class="w3-container">
+
+  <div class="w3-bar w3-theme w3-large">
+    <input #text class="w3-bar-item" type="text" placeholder="Search User.." (keyup.enter)="searchUser(text.value)">
+    <button class="w3-bar-item w3-button" (click)="searchUser(text.value)">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddUserDialog=true">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <br>
+
+  <p *ngIf="listUser.isEmpty">
+    Nothing to do! Add Users above.
+  </p>
+
+  <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" *ngIf="listUser.isNotEmpty">
+    <tr *ngFor="let user of listUser; let i=index" (click)="onSelect(user)">
+      <td>
+        <!-- <span [class.done]="done.checked">{{user.username}}</span> -->
+        {{user.username}}
+      </td>
+      <td>
+        <material-fab mini (trigger)="remove(i)">
+          <material-icon icon="delete"></material-icon>
+        </material-fab>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <!-- paging -->
+  <div class="w3-center">
+    <div class="w3-bar" *ngIf="listUser.isNotEmpty">
+      <a href="#" class="w3-button" (click)="prevPage()" >&laquo;</a>
+      <a *ngFor="let page of pages; let i=index" (click)="goToPage(i+1)"  
+        class="w3-button" [class.w3-gray]="current==(i+1)">{{i + 1}}</a>
+      <a href="#" class="w3-button" (click)="nextPage()">&raquo;</a>
+    </div>
+  </div>
+  
+</div>

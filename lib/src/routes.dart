@@ -1,0 +1,31 @@
+import 'package:angular_router/angular_router.dart';
+
+import 'route_paths.dart';
+import 'dashboard/dashboard_component.template.dart' as dashboard_template;
+import 'user/user_component.template.dart' as user_template;
+import 'setting/setting_component.template.dart' as setting_template;
+
+export 'route_paths.dart';
+
+class Routes {
+  static final dashboard = RouteDefinition(
+    routePath: RoutePaths.dashboard,
+    component: dashboard_template.DashboardComponentNgFactory,
+  );
+
+  static final user = RouteDefinition(
+    routePath: RoutePaths.user,
+    component: user_template.UserComponentNgFactory,
+  );
+
+  static final setting = RouteDefinition(
+    routePath: RoutePaths.setting,
+    component: setting_template.SettingComponentNgFactory,
+  );
+
+  static final all = <RouteDefinition>[
+    dashboard,
+    user,
+    setting
+  ];
+}
