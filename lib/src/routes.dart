@@ -5,6 +5,7 @@ import 'dashboard/dashboard_component.template.dart' as dashboard_template;
 import 'user/user_component.template.dart' as user_template;
 import 'org/org_component.template.dart' as org_template;
 import 'resource/resource_component.template.dart' as resource_template;
+import 'priv/priv_component.template.dart' as priv_template;
 import 'setting/setting_component.template.dart' as setting_template;
 
 export 'route_paths.dart';
@@ -30,6 +31,11 @@ class Routes {
     component: resource_template.ResourceComponentNgFactory,
   );
 
+    static final priv = RouteDefinition(
+    routePath: RoutePaths.priv,
+    component: priv_template.PrivComponentNgFactory,
+  );
+
   static final setting = RouteDefinition(
     routePath: RoutePaths.setting,
     component: setting_template.SettingComponentNgFactory,
@@ -39,6 +45,7 @@ class Routes {
     dashboard,
     user,
     org,
+    priv,
     resource,
     setting
   ];
