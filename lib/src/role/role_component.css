@@ -19,7 +19,3 @@ tr material-fab {
   float: center;
   vertical-align: middle;
 }
-
-.done {
-  text-decoration: line-through;
-}
