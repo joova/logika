@@ -1,0 +1,21 @@
+/* table {
+  list-style: none;
+  padding-left: 0;
+} */
+
+tr {
+  line-height: 3em;
+}
+
+tr:hover {
+  background-color: #EEEEEE;
+}
+
+/* tr material-checkbox {
+  vertical-align: middle;
+} */
+
+tr material-fab {
+  float: center;
+  vertical-align: middle;
+}

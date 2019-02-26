@@ -7,6 +7,7 @@ import 'org/org_component.template.dart' as org_template;
 import 'resource/resource_component.template.dart' as resource_template;
 import 'priv/priv_component.template.dart' as priv_template;
 import 'setting/setting_component.template.dart' as setting_template;
+import 'role/role_component.template.dart' as role_template;
 
 export 'route_paths.dart';
 
@@ -41,12 +42,19 @@ class Routes {
     component: setting_template.SettingComponentNgFactory,
   );
 
+   static final role = RouteDefinition(
+    routePath: RoutePaths.role,
+    component: role_template.RoleComponentNgFactory,
+  );
+
+
   static final all = <RouteDefinition>[
     dashboard,
     user,
     org,
     priv,
     resource,
-    setting
+    setting,
+    role
   ];
 }
