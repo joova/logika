@@ -4,7 +4,10 @@ class RoutePaths {
   static final dashboard = RoutePath(path: 'dashboard');
   static final user = RoutePath(path: 'user');
   static final org = RoutePath(path: 'org');
+  static final priv = RoutePath(path: 'priv');
   static final resource = RoutePath(path: 'resource');
   static final setting = RoutePath(path: 'setting');
-   static final act = RoutePath(path: 'act');
+  static final act = RoutePath(path: 'act');
+  static final role = RoutePath(path: 'role');
+
 }
