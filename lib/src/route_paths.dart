@@ -6,4 +6,5 @@ class RoutePaths {
   static final org = RoutePath(path: 'org');
   static final resource = RoutePath(path: 'resource');
   static final setting = RoutePath(path: 'setting');
+   static final act = RoutePath(path: 'act');
 }

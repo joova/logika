@@ -3,14 +3,14 @@
     <div header>
       <h1>Add/Edit User</h1>
     </div>
-    <material-input label="Username" type ="email"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="user.username">
+    <material-input label="Nama/Email" type ="email"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="user.username">
     </material-input>
-    <material-input label="Password" type="password" required floatingLabel style="width:100%" [(ngModel)]="user.password"
+    <material-input label="Kata Sandi" type="password" required floatingLabel style="width:100%" [(ngModel)]="user.password"
       (keyup.enter)="add()">
     </material-input>
-    <material-input label="First Name" type ="text"  required  floatingLabel style="width:100%" [(ngModel)]="user.firstName">
+    <material-input label="Nama Depan" type ="text"  required  floatingLabel style="width:100%" [(ngModel)]="user.firstName">
     </material-input>
-    <material-input label="Last Name" type ="text"  required  floatingLabel style="width:100%" [(ngModel)]="user.lastName">
+    <material-input label="Nama Akhir" type ="text"  required  floatingLabel style="width:100%" [(ngModel)]="user.lastName">
     </material-input>
 
     <div footer>
