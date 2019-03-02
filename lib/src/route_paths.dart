@@ -10,5 +10,6 @@ class RoutePaths {
   static final act = RoutePath(path: 'act');
   static final role = RoutePath(path: 'role');
   static final plm_type = RoutePath(path: 'plm_type');
+  static final plmCategory = RoutePath(path: 'plm_category');
 
 }
