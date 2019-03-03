@@ -23,7 +23,6 @@ import 'priv_service.dart';
   templateUrl: 'priv_component.html',
   directives: [
     displayNameRendererDirective,
-    
     AutoDismissDirective,
     AutoFocusDirective,
     MaterialSelectComponent,
@@ -38,6 +37,7 @@ import 'priv_service.dart';
   ],
   providers: [
     ClassProvider(PrivService), 
+    materialProviders,
     overlayBindings
   ],
 )
@@ -78,6 +78,7 @@ class PrivComponent implements OnInit {
     pages = new List(paging.getPage());
 
     listPriv = paging.getData();
+
     listResource = await privService.getResources();
     listAction = await privService.getActions();
 
@@ -142,11 +143,12 @@ class PrivComponent implements OnInit {
   void onSelect(Priv selected) {
     priv = selected;
     
+    resourceSelection.select(priv.resource);
+    actionSelection.select(priv.action);
+
     // print(priv.id);
     isAddNewRecord = false;
     showAddPrivDialog = true;
-
-    print(resourceSelection.select(priv.resource));
   }
 
   Future<void> add() async {
