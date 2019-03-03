@@ -45,13 +45,15 @@ class Resource  implements HasUIDisplayName {
       uri: res['uri']
     );
 
-  Map toJson() => {
-    // 'id': _id, 
-    'name': name
+    Map toJson() => {
+      'id': id, 
+      'name': name,
+      'uri': uri
     };
 
   @override
   String get uiDisplayName => name;
+  bool operator ==(Object other) => (other is Resource && this.id == other.id);
 }
 
 class IdmAction  implements HasUIDisplayName {
@@ -76,4 +78,6 @@ class IdmAction  implements HasUIDisplayName {
 
   @override
   String get uiDisplayName => name;
+
+  bool operator ==(Object other) => (other is IdmAction && this.code == other.code);
 }

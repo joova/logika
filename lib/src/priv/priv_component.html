@@ -6,7 +6,7 @@
     <!-- <material-input label="Resource" type ="text"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="priv.resource" (keyup.enter)="add()">
     </material-input> -->
     <p>Resource</p>
-    <material-select [(selection)]="resourceSelection" class="bordered-list">
+    <material-select [(selection)]="resourceSelection" width="3">
       <material-select-item *ngFor="let resource of listResource"
                             [value]="resource"
                             displayNameRenderer></material-select-item>
@@ -16,7 +16,7 @@
     <material-select [(selection)]="actionSelection"
       [options]="actionOptions"
       displayNameRenderer
-      class="bordered-list">
+      width="3">
     </material-select>
 
     <div footer>
