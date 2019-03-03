@@ -100,10 +100,10 @@ class PlmCategoryService {
     }
   }
 
-  Future<PlmCategory> update(PlmCategory plm_category) async {
+  Future<PlmCategory> delete(PlmCategory plm_category) async {
     try {
       final url = '$_plmUrl/category/${plm_category.code}';
-      final response = await _http.put(url, headers: _headers, body: json.encode(plm_category));
+      final response = await _http.delete(url);
       return PlmCategory.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);

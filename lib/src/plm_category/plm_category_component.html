@@ -60,11 +60,11 @@
       <th>Name</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let category of listPlmCategory; let i=index" (click)="onSelect(category)">
-      <td>
+    <tr *ngFor="let category of listPlmCategory; let i=index" >
+      <td> (click)="onSelect(category)"
         {{category.code}}
       </td>
-      <td>
+      <td>(click)="onSelect(category)"
         {{category.name}}
       </td>
       <td>
