@@ -100,11 +100,20 @@ class PlmCategoryService {
     }
   }
 
-  Future<PlmCategory> delete(PlmCategory plm_category) async {
+  Future<PlmCategory> update(PlmCategory plm_category) async {
     try {
       final url = '$_plmUrl/category/${plm_category.code}';
-      final response = await _http.delete(url);
+      final response = await _http.put(url, headers: _headers, body: json.encode(plm_category));
       return PlmCategory.fromJson(_extractData(response));
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> delete(PlmCategory plm_category) async {
+    try {
+      final url = '$_plmUrl/category/${plm_category.code}';
+      final response = await _http.delete(url, headers: _headers);
     } catch (e) {
       throw _handleError(e);
     }
