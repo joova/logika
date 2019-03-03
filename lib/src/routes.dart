@@ -5,8 +5,10 @@ import 'dashboard/dashboard_component.template.dart' as dashboard_template;
 import 'user/user_component.template.dart' as user_template;
 import 'org/org_component.template.dart' as org_template;
 import 'action/act_component.template.dart' as act_template;
+import 'plm_category/plm_category_component.template.dart' as plm_category_template;
 import 'resource/resource_component.template.dart' as resource_template;
 import 'priv/priv_component.template.dart' as priv_template;
+import 'plm_type/plm_type_component.template.dart' as plm_type_template;
 import 'setting/setting_component.template.dart' as setting_template;
 import 'role/role_component.template.dart' as role_template;
 
@@ -32,6 +34,10 @@ class Routes {
     routePath: RoutePaths.act,
     component: act_template.ActComponentNgFactory,
   );
+  static final plm_category = RouteDefinition(
+    routePath: RoutePaths.plmCategory,
+    component: plm_category_template.PlmCategoryComponentNgFactory,
+  );
 
   static final resource = RouteDefinition(
     routePath: RoutePaths.resource,
@@ -41,6 +47,11 @@ class Routes {
     static final priv = RouteDefinition(
     routePath: RoutePaths.priv,
     component: priv_template.PrivComponentNgFactory,
+  );
+
+    static final plm_type = RouteDefinition(
+    routePath: RoutePaths.plm_type,
+    component: plm_type_template.PlmTypeComponentNgFactory,
   );
 
   static final setting = RouteDefinition(
@@ -60,8 +71,10 @@ class Routes {
     act,
     org,
     priv,
+    plm_type,
     resource,
     setting,
-    role
+    plm_category,
+    role,
   ];
 }
