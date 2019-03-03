@@ -8,14 +8,14 @@ import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
 import 'package:logika/src/pagination_service.dart';
 
-import 'package:logika/src/action/act.dart';
+import 'package:logika/src/product/product.dart';
 
-import 'act_service.dart';
+import 'product_service.dart';
 
 @Component(
-  selector: 'act',
-  styleUrls: ['act_component.css'],
-  templateUrl: 'act_component.html',
+  selector: 'product',
+  styleUrls: ['product_component.css'],
+  templateUrl: 'product_component.html',
   directives: [
     AutoDismissDirective,
     AutoFocusDirective,
@@ -29,56 +29,56 @@ import 'act_service.dart';
     NgIf,
   ],
   providers: [
-    ClassProvider(ActService), 
+    ClassProvider(ProductService), 
     overlayBindings
   ],
 )
 
-class ActComponent implements OnInit {
-  final ActService actService;
+class ProductComponent implements OnInit {
+  final ProductService productService;
 
-  List<Act> listAct = [];
-  Act act = new Act();
+  List<Product> listProduct = [];
+  Product product = new Product();
   String _text = "";
 
   int current = 1;
   int limit = 10;
   List pages;
 
-  bool showAddActDialog = false;
+  bool showAddProductDialog = false;
 
-  ActComponent(this.actService);
+  ProductComponent(this.productService);
 
   @override
   Future<Null> ngOnInit() async {
     var paging = await _goToPage(1);
     pages = new List(paging.getPage());
-    listAct = paging.getData();
+    listProduct = paging.getData();
   }
 
-  Future<Null> searchAct(String text) async {
+  Future<Null> searchProduct(String text) async {
     _text = text;
     var paging;
     if (_text != ""){
-      paging = await _searchAct(1);
+      paging = await _searchProduct(1);
     } else {
       paging = await _goToPage(1);
     }
     
     pages = new List(paging.getPage());
-    listAct = paging.getData();
+    listProduct = paging.getData();
   }
 
-  Future<Pagination> _searchAct(int page) async {
+  Future<Pagination> _searchProduct(int page) async {
     current = page;
     var offset = (page - 1) * limit;
-    var paging = await actService.search(_text, offset, limit);
+    var paging = await productService.search(_text, offset, limit);
     return paging;
   }
 
   Future<Null> goToPage(int page) async {
     var paging = await _goToPage(page);
-    listAct = paging.getData();
+    listProduct = paging.getData();
   }
 
   Future<Null> prevPage() async {
@@ -86,7 +86,7 @@ class ActComponent implements OnInit {
       current--;
 
     var paging = await _goToPage(current);
-    listAct = paging.getData();
+    listProduct = paging.getData();
   }
 
   Future<Null> nextPage() async {
@@ -94,7 +94,7 @@ class ActComponent implements OnInit {
       current++;
 
     var paging = await _goToPage(current);
-    listAct = paging.getData();
+    listProduct = paging.getData();
   }
 
   Future<Pagination> _goToPage(int page) async {
@@ -102,38 +102,34 @@ class ActComponent implements OnInit {
     var offset = (page - 1) * limit;
     var paging;
     if (_text != ""){
-      paging = await actService.search(_text, offset, limit);
+      paging = await productService.search(_text, offset, limit);
     } else {
-      paging = await actService.getPaging(offset, limit);
+      paging = await productService.getPaging(offset, limit);
     }
     return paging;
   }
 
-  void onSelect(Act selected) {
-    act = selected;
-    print(act.code);
-    showAddActDialog = true;
+  void onSelect(Product selected) {
+    product = selected;
+    // print(product.id);
+    showAddProductDialog = true;
   }
 
   Future<void> add() async {
-    var newAct = await actService.create(act);
+    var newProduct = await productService.create(product);
 
-    listAct.add(newAct);
-    act = new Act();
+    listProduct.add(newProduct);
+    product = new Product();
 
-    showAddActDialog = false;
+    showAddProductDialog = false;
   }
 
   Future<void> update() async {
-    await actService.update(act);
-    act = new Act();
+    await productService.update(product);
+    product = new Product();
 
-    showAddActDialog = false;
+    showAddProductDialog = false;
   }
 
-  Act remove(int index) {
-    act=listAct[index];
-    actService.delete(act);
-    return listAct.removeAt(index);
-  } 
+  Product remove(int index) => listProduct.removeAt(index);
 }

@@ -4,25 +4,25 @@ import 'dart:convert';
 import 'package:angular/core.dart';
 import 'package:http/http.dart';
 import 'package:logika/src/pagination_service.dart';
-import 'package:logika/src/action/act.dart';
+import 'package:logika/src/product/product.dart';
 
 /// Mock service emulating access to a to-do list stored on a server.
 @Injectable()
-class ActService {
+class ProductService {
   static final _headers = {'Content-Type': 'application/json'};
-  static const _idmUrl = 'http://localhost:8000/api/idm'; // URL to web API
+  static const _idmUrl = 'http://localhost:8001/api/'; // URL to web API
   final Client _http;
   
-  ActService(this._http);
+  ProductService(this._http);
 
-  Future<List<Act>> getAll() async {
+  Future<List<Product>> getAll() async {
     try {
-      final response = await _http.get('$_idmUrl/actions');
+      final response = await _http.get('$_idmUrl/products');
       final data = _extractData(response) as List;
-      final acts = (data)
-          .map((value) => Act.fromJson(value))
+      final products = (data)
+          .map((value) => Product.fromJson(value))
           .toList();
-      return acts;
+      return products;
     } catch (e) {
       throw _handleError(e);
     }
@@ -30,23 +30,23 @@ class ActService {
 
   Future<Pagination> getPaging(int off, int lmt) async {
     try {
-      final response = await _http.get('$_idmUrl/actions/$off/$lmt');
+      final response = await _http.get('$_idmUrl/products/$off/$lmt');
       
       final data = _extractData(response) as List;
       if(data == null) {
-        final Pagination paging = new Pagination(0, 0, 0, List<Act>());
+        final Pagination paging = new Pagination(0, 0, 0, List<Product>());
         return paging;
       }
         
 
-      final acts = (data).map((value) => Act.fromJson(value)).toList();
+      final products = (data).map((value) => Product.fromJson(value)).toList();
       
       final headers = response.headers;
       final page = headers["pagination-page"];
       final count = headers["pagination-count"];
       final limit = headers["pagination-limit"];
      
-      final Pagination paging = new Pagination(int.parse(page), int.parse(limit), int.parse(count), acts);
+      final Pagination paging = new Pagination(int.parse(page), int.parse(limit), int.parse(count), products);
 
       return paging;
     } catch (e) {
@@ -56,10 +56,10 @@ class ActService {
 
   Future<Pagination> search(String text, int off, int lmt) async {
     try {
-      final response = await _http.get('$_idmUrl/actions/$off/$lmt/$text');
+      final response = await _http.get('$_idmUrl/products/$off/$lmt/$text');
       
       final data = _extractData(response) as List;
-      final acts = (data).map((value) => Act.fromJson(value)).toList();
+      final products = (data).map((value) => Product.fromJson(value)).toList();
       
       final headers = response.headers;
       
@@ -67,7 +67,7 @@ class ActService {
       final count = headers["pagination-count"];
       final limit = headers["pagination-limit"];
       
-      final Pagination paging = new Pagination(int.parse(page), int.parse(limit), int.parse(count), acts);
+      final Pagination paging = new Pagination(int.parse(page), int.parse(limit), int.parse(count), products);
 
       return paging;
     } catch (e) {
@@ -75,51 +75,42 @@ class ActService {
     }
   }
 
-  Future<Act> get(String code) async {
+  Future<Product> get(String id) async {
     try {
-      final response = await _http.get('$_idmUrl/action/$code');
+      final response = await _http.get('$_idmUrl/product/$id');
       
-      return Act.fromJson(_extractData(response));
+      return Product.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
     }
   }
 
-  Future<Act> create(Act act) async {
-    print(json.encode(act));
+  Future<Product> create(Product product) async {
+    print(json.encode(product));
     try {
       final response = await _http.post(
-        '$_idmUrl/action',
+        '$_idmUrl/product',
         headers: _headers, 
-        body: json.encode(act),
+        body: json.encode(product),
       );
-      return Act.fromJson(_extractData(response));
+      return Product.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
     }
   }
 
-  Future<Act> update(Act act) async {
+  Future<Product> update(Product product) async {
     try {
-      final url = '$_idmUrl/action/${act.code}';
-      final response = await _http.put(url, headers: _headers, body: json.encode(act));
-      return Act.fromJson(_extractData(response));
+      final url = '$_idmUrl/product/${product.id}';
+      final response = await _http.put(url, headers: _headers, body: json.encode(product));
+      return Product.fromJson(_extractData(response));
     } catch (e) {
       throw _handleError(e);
     }
   }
 
-  Future<void> delete(Act plm_category) async {
-    try {
-      final url = '$_idmUrl/act/${plm_category.code}';
-      final response = await _http.delete(url, headers: _headers);
-    } catch (e) {
-      throw _handleError(e);
-    }
-  }
-
-  List<Act> mockActList = actList().toList();
-  Future<List<Act>> getActList() async => mockActList;
+  List<Product> mockProductList = productList().toList();
+  Future<List<Product>> getProductList() async => mockProductList;
 }
 
 dynamic _extractData(Response resp) => json.decode(resp.body);
@@ -129,11 +120,11 @@ Exception _handleError(dynamic e) {
   return Exception('Server error; cause: $e');
 }
 
-Iterable<Act> actList() sync* {
+Iterable<Product> productList() sync* {
   var names = ['nur.hasyim@gmail.com', 'nuraida@gmail.com', 'ranomi@gmail.com'];
 
   for (var name in names) {
-    var act = Act(name: name);
-    yield act;
+    var product = Product(name: name);
+    yield product;
   }
 }

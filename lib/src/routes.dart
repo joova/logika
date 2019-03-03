@@ -11,6 +11,7 @@ import 'priv/priv_component.template.dart' as priv_template;
 import 'plm_type/plm_type_component.template.dart' as plm_type_template;
 import 'setting/setting_component.template.dart' as setting_template;
 import 'role/role_component.template.dart' as role_template;
+import 'product/product_component.template.dart' as product_template;
 
 export 'route_paths.dart';
 
@@ -64,6 +65,11 @@ class Routes {
     component: role_template.RoleComponentNgFactory,
   );
 
+  static final product = RouteDefinition(
+    routePath: RoutePaths.product,
+    component: product_template.ProductComponentNgFactory,
+  );
+
 
   static final all = <RouteDefinition>[
     dashboard,
@@ -76,5 +82,6 @@ class Routes {
     setting,
     plm_category,
     role,
+    product,
   ];
 }

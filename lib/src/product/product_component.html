@@ -1,0 +1,75 @@
+<modal [(visible)]="showAddProductDialog">
+  <material-dialog headered class="headered-dialog">
+    <div header>
+      <h1>Add/Edit Product</h1>
+    </div>
+    <material-input label="Name" type ="text"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="product.name" (keyup.enter)="add()">
+    </material-input>
+    
+    <div footer>
+      <button class="w3-btn w3-green" *ngIf="product.id == null" (click)="add()" [disabled]="product.name == null">
+        Create
+      </button>
+
+      <button class="w3-btn w3-green" *ngIf="product.id != null" (click)="update()" [disabled]="product.name == null">
+        Update
+      </button>
+      &nbsp;
+      <button class="w3-btn w3-red" (click)="showAddProductDialog=false">
+        Close
+      </button>
+    </div>
+  </material-dialog>
+</modal>
+
+
+<br>
+
+
+<div class="w3-container">
+
+  <div class="w3-bar w3-theme w3-large">
+    <input #text class="w3-bar-item" type="text" placeholder="Search Product.." (keyup.enter)="searchProduct(text.value)">
+    <button class="w3-bar-item w3-button" (click)="searchProduct(text.value)">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddProductDialog=true">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <br>
+
+  <p *ngIf="listProduct.isEmpty">
+    Nothing to do! Add Product above.
+  </p>
+
+  <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" *ngIf="listProduct.isNotEmpty">
+    <tr>
+      <th>Name</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let product of listProduct; let i=index" (click)="onSelect(product)">
+      <td>
+        <!-- <span [class.done]="done.checked">{{user.username}}</span> -->
+        {{product.name}}
+      </td>
+      <td>
+        <material-fab mini (trigger)="remove(i)">
+          <material-icon icon="delete"></material-icon>
+        </material-fab>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <!-- paging -->
+  <div class="w3-center">
+    <div class="w3-bar" *ngIf="listProduct.isNotEmpty">
+      <a href="#" class="w3-button" (click)="prevPage()" >&laquo;</a>
+      <a *ngFor="let page of pages; let i=index" (click)="goToPage(i+1)"  
+        class="w3-button" [class.w3-gray]="current==(i+1)">{{i + 1}}</a>
+      <a href="#" class="w3-button" (click)="nextPage()">&raquo;</a>
+    </div>
+  </div>
+  
+</div>
