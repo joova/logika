@@ -3,22 +3,28 @@
     <div header>
       <h1>Add/Edit Priv</h1>
     </div>
-    <material-input label="Resource" type ="text"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="priv.resource" (keyup.enter)="add()">
-    </material-input>
+    <!-- <material-input label="Resource" type ="text"  required autoFocus floatingLabel style="width:100%" [(ngModel)]="priv.resource" (keyup.enter)="add()">
+    </material-input> -->
+    <p>Resource</p>
+    <material-select [(selection)]="resourceSelection" class="bordered-list">
+      <material-select-item *ngFor="let resource of listResource"
+                            [value]="resource"
+                            displayNameRenderer></material-select-item>
+    </material-select>
+    
+    <p>Action</p>
+    <material-select [(selection)]="actionSelection"
+      [options]="actionOptions"
+      displayNameRenderer
+      class="bordered-list">
+    </material-select>
 
-    <select >
-      <option *ngFor="let resource of listResource; let id=resource.id">
-        {{resource.name}}
-      </option>
-    </select>
-    
-    
     <div footer>
-      <button class="w3-btn w3-green" *ngIf="priv.id == null" (click)="add()" [disabled]="priv.resource == null">
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord" (click)="add()" [disabled]="resourceSelection.isEmpty && actionSelection.isEmpty">
         Create
       </button>
 
-      <button class="w3-btn w3-green" *ngIf="priv.id != null" (click)="update()" [disabled]="priv.resource == null">
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == false" (click)="update()" [disabled]="resourceSelection.isEmpty && actionSelection.isEmpty">
         Update
       </button>
       &nbsp;
@@ -40,7 +46,7 @@
     <button class="w3-bar-item w3-button" (click)="searchPriv(text.value)">
       <i class="fa fa-search"></i>
     </button>
-    <button class="w3-bar-item w3-button w3-right" (click)="showAddPrivDialog=true">
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddPrivDialog=true;isAddNewRecord=true">
       <i class="fa fa-plus"></i>
     </button>
   </div>
@@ -57,8 +63,8 @@
       <th>Action</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let priv of listPriv; let i=index" (click)="onSelect(priv)">
-      <td>
+    <tr *ngFor="let priv of listPriv; let i=index">
+      <td (click)="onSelect(priv)">
         {{priv.resource.name}}
       </td>
       <td>
