@@ -56,11 +56,11 @@
       <th>Name</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let plmType of listPlmType; let i=index" (click)="onSelect(plmType)">
-      <td>
+    <tr *ngFor="let plmType of listPlmType; let i=index">
+      <td  (click)="onSelect(plmType)">
         {{plmType.code}}
       </td>
-      <td>
+      <td  (click)="onSelect(plmType)">
         {{plmType.name}}
       </td>
       <td>
