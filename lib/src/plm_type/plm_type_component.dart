@@ -135,5 +135,9 @@ class PlmTypeComponent implements OnInit {
     showAddPlmTypeDialog = false;
   }
 
-  PlmType remove(int index) => listPlmType.removeAt(index);
+  PlmType remove(int index) {
+    plmType=listPlmType[index];
+    plmTypeService.delete(plmType);
+    return listPlmType.removeAt(index);
+  } 
 }
