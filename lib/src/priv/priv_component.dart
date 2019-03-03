@@ -6,6 +6,11 @@ import 'package:angular_components/auto_dismiss/auto_dismiss.dart';
 import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
+import 'package:angular_components/material_select/display_name.dart';
+import 'package:angular_components/material_select/material_select.dart';
+import 'package:angular_components/material_select/material_select_item.dart';
+import 'package:angular_components/model/selection/selection_model.dart';
+import 'package:angular_components/model/selection/selection_options.dart';
 import 'package:logika/src/pagination_service.dart';
 
 import 'package:logika/src/priv/priv.dart';
@@ -17,16 +22,17 @@ import 'priv_service.dart';
   styleUrls: ['priv_component.css'],
   templateUrl: 'priv_component.html',
   directives: [
+    displayNameRendererDirective,
+    
     AutoDismissDirective,
     AutoFocusDirective,
-    MaterialDropdownSelectComponent,
+    MaterialSelectComponent,
     MaterialSelectItemComponent,
     MaterialCheckboxComponent,
     MaterialFabComponent,
     MaterialIconComponent,
     MaterialDialogComponent,
     ModalComponent,
-    materialInputDirectives,
     NgFor,
     NgIf,
   ],
@@ -39,17 +45,30 @@ import 'priv_service.dart';
 class PrivComponent implements OnInit {
   final PrivService privService;
 
+  // data variable
+  static List<Resource> listResource = [];
+  static List<IdmAction> listAction = [];
+
   List<Priv> listPriv = [];
-  var listResource = [];
-  var listAction = [];
   Priv priv = new Priv();
   String _text = "";
 
+  // paging variable
   int current = 1;
   int limit = 10;
   List pages;
 
+  // dispaly form input
   bool showAddPrivDialog = false;
+  bool isAddNewRecord = true;
+  
+  // selection component
+  SelectionModel<IdmAction> actionSelection = SelectionModel.single();
+  SelectionOptions<IdmAction> actionOptions;
+
+  SelectionModel<Resource> resourceSelection = SelectionModel.single();
+  SelectionOptions<Resource> resourceOptions;
+
 
   PrivComponent(this.privService);
 
@@ -57,9 +76,14 @@ class PrivComponent implements OnInit {
   Future<Null> ngOnInit() async {
     var paging = await _goToPage(1);
     pages = new List(paging.getPage());
+
     listPriv = paging.getData();
     listResource = await privService.getResources();
     listAction = await privService.getActions();
+
+    actionOptions = SelectionOptions.fromList(listAction);
+    resourceOptions = SelectionOptions.fromList(listResource);
+    
   }
 
   Future<Null> searchPriv(String text) async {
@@ -117,11 +141,18 @@ class PrivComponent implements OnInit {
 
   void onSelect(Priv selected) {
     priv = selected;
+    
     // print(priv.id);
+    isAddNewRecord = false;
     showAddPrivDialog = true;
+
+    print(resourceSelection.select(priv.resource));
   }
 
   Future<void> add() async {
+    priv.resource = resourceSelection.selectedValues.first;
+    priv.action = actionSelection.selectedValues.first;
+
     var newpriv = await privService.create(priv);
 
     listPriv.add(newpriv);
@@ -131,11 +162,18 @@ class PrivComponent implements OnInit {
   }
 
   Future<void> update() async {
+    priv.resource = resourceSelection.selectedValues.first;
+    priv.action = actionSelection.selectedValues.first;
+
     await privService.update(priv);
     priv = new Priv();
 
     showAddPrivDialog = false;
   }
 
-  Priv remove(int index) => listPriv.removeAt(index);
+  Priv remove(int index) {
+    priv = listPriv[index];
+    privService.delete(priv);
+    return listPriv.removeAt(index);
+  }
 }

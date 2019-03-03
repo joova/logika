@@ -1,4 +1,6 @@
-class Resource {
+import 'package:angular_components/model/ui/display_name.dart';
+
+class Resource implements HasUIDisplayName {
   String id;
   String name;
   String uri;
@@ -22,4 +24,7 @@ class Resource {
     'name': name,
     'uri': uri
     };
+
+  @override
+  String get uiDisplayName => name;
 }
