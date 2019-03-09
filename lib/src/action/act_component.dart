@@ -131,5 +131,9 @@ class ActComponent implements OnInit {
     showAddActDialog = false;
   }
 
-  Act remove(int index) => listAct.removeAt(index);
+  Act remove(int index) {
+    act=listAct[index];
+    actService.delete(act);
+    return listAct.removeAt(index);
+  } 
 }

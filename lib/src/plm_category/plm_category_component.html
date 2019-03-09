@@ -53,6 +53,7 @@
   <p *ngIf="listPlmCategory.isEmpty">
     Nothing to do! Add PlmCategory.
   </p>
+  
 
   <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" *ngIf="listPlmCategory.isNotEmpty">
     <tr>
@@ -60,11 +61,11 @@
       <th>Name</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let category of listPlmCategory; let i=index" (click)="onSelect(category)">
-      <td>
+    <tr *ngFor="let category of listPlmCategory; let i=index" >
+      <td  (click)="onSelect(category)">
         {{category.code}}
       </td>
-      <td>
+      <td  (click)="onSelect(category)">
         {{category.name}}
       </td>
       <td>

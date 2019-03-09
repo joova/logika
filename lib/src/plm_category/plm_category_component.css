@@ -1,14 +1,24 @@
-/* table {
-  list-style: none;
-  padding-left: 0;
-} */
+table, td, th {  
+  border: 1px solid rgb(48, 48, 48);
+  text-align: left;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: rgba(23, 35, 196, 0.815);
+  color: white;
+}
 
 tr {
-  line-height: 3em;
+  line-height: 1,5em;
 }
 
 tr:hover {
-  background-color: #EEEEEE;
+  background-color: #d8d5d5;
 }
 
 /* tr material-checkbox {

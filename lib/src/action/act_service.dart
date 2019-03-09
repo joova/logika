@@ -109,6 +109,15 @@ class ActService {
     }
   }
 
+  Future<void> delete(Act plm_category) async {
+    try {
+      final url = '$_idmUrl/act/${plm_category.code}';
+      final response = await _http.delete(url, headers: _headers);
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   List<Act> mockActList = actList().toList();
   Future<List<Act>> getActList() async => mockActList;
 }

@@ -12,5 +12,6 @@ class RoutePaths {
   static final plm_uom = RoutePath(path: 'plm_uom');
   static final plm_type = RoutePath(path: 'plm_type');
   static final plmCategory = RoutePath(path: 'plm_category');
+  static final product = RoutePath(path: 'product');
 
 }

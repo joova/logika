@@ -11,7 +11,8 @@ import 'package:logika/src/plm_category/plm_category.dart';
 @Injectable()
 class PlmCategoryService {
   static final _headers = {'Content-Type': 'application/json'};
-  static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
+  // static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
+  static const _plmUrl = 'http://192.168.100.35:8001/api/plm'; // URL to web API
   final Client _http;
   
   PlmCategoryService(this._http);
@@ -105,6 +106,15 @@ class PlmCategoryService {
       final url = '$_plmUrl/category/${plm_category.code}';
       final response = await _http.put(url, headers: _headers, body: json.encode(plm_category));
       return PlmCategory.fromJson(_extractData(response));
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> delete(PlmCategory plm_category) async {
+    try {
+      final url = '$_plmUrl/category/${plm_category.code}';
+      final response = await _http.delete(url, headers: _headers);
     } catch (e) {
       throw _handleError(e);
     }

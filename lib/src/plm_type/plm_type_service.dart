@@ -10,7 +10,9 @@ import 'package:logika/src/plm_type/plm_type.dart';
 @Injectable()
 class PlmTypeService {
   static final _headers = {'Content-Type': 'application/json'};
-  static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
+  // static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
+  static const _plmUrl = 'http://192.168.100.35:8001/api/plm'; // URL to web API
+
   final Client _http;
   
   PlmTypeService(this._http);

@@ -127,12 +127,15 @@ class PlmCategoryComponent implements OnInit {
     showAddPlmCategoryDialog = false;
   }
 
-  Future<void> update() async {
-    await plmCategoryService.update(plmCategory);
-    plmCategory = new PlmCategory();
+    Future<void> update() async {
+   await plmCategoryService.update(plmCategory);
 
     showAddPlmCategoryDialog = false;
   }
 
-  PlmCategory remove(int index) => listPlmCategory.removeAt(index);
+  PlmCategory remove(int index) {
+    plmCategory=listPlmCategory[index];
+    plmCategoryService.delete(plmCategory);
+    return listPlmCategory.removeAt(index);
+  } 
 }
