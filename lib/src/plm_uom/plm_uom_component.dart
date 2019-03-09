@@ -46,6 +46,10 @@ class PlmUomComponent implements OnInit {
   List pages;
 
   bool showAddPlmUomDialog = false;
+<<<<<<< HEAD
+=======
+  bool isAddNewRecord = true;
+>>>>>>> abca9532612084dce3d7c4e3a978533ef6c8f024
 
   PlmUomComponent(this.plmUomService);
 
@@ -112,7 +116,14 @@ class PlmUomComponent implements OnInit {
   void onSelect(PlmUom selected) {
     plmUom = selected;
     print(plmUom.code);
+<<<<<<< HEAD
     showAddPlmUomDialog = true;
+=======
+
+    isAddNewRecord = false;
+    showAddPlmUomDialog = true;
+
+>>>>>>> abca9532612084dce3d7c4e3a978533ef6c8f024
   }
 
   Future<void> add() async {
@@ -131,5 +142,13 @@ class PlmUomComponent implements OnInit {
     showAddPlmUomDialog = false;
   }
 
+<<<<<<< HEAD
   PlmUom remove(int index) => listPlmUom.removeAt(index);
+=======
+  PlmUom remove(int index) {
+    plmUom=listPlmUom[index];
+    plmUomService.delete(plmUom);
+    return listPlmUom.removeAt(index);
+  }
+>>>>>>> abca9532612084dce3d7c4e3a978533ef6c8f024
 }
