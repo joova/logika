@@ -1,11 +1,19 @@
+table, td, th{  
+  border: 1px solid #ddd;
+}
 
-/* table {
-  list-style: none;
-  padding-left: 0;
-} */
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
 
 tr {
-  line-height: 3em;
+  line-height: 2em;
 }
 
 tr:hover {
@@ -21,6 +29,6 @@ tr material-fab {
   vertical-align: middle;
 }
 
-.headered-dialog {
-  width: 340;
+.done {
+  text-decoration: line-through;
 }
