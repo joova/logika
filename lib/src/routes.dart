@@ -9,6 +9,7 @@ import 'resource/resource_component.template.dart' as resource_template;
 import 'priv/priv_component.template.dart' as priv_template;
 import 'setting/setting_component.template.dart' as setting_template;
 import 'role/role_component.template.dart' as role_template;
+import 'plm_uom/plm_uom_component.template.dart' as plm_uom_template;
 
 export 'route_paths.dart';
 
@@ -53,6 +54,11 @@ class Routes {
     component: role_template.RoleComponentNgFactory,
   );
 
+  static final plm_uom = RouteDefinition(
+    routePath: RoutePaths.plm_uom,
+    component: plm_uom_template.PlmUomComponentNgFactory,
+  );
+
 
   static final all = <RouteDefinition>[
     dashboard,
@@ -62,6 +68,7 @@ class Routes {
     priv,
     resource,
     setting,
-    role
+    role,
+    plm_uom
   ];
 }
