@@ -1,0 +1,83 @@
+<modal [(visible)]="showAddPlmUomDialog">
+  <material-dialog headered class="headered-dialog">
+    <div header>
+      <h1>Add/Edit UoM</h1>
+    </div>
+    <material-input label="Code" type="text" required autoFocus floatingLabel style="width:100%" [(ngModel)]="plmUom.code">
+    </material-input>
+
+    <material-input label="Name" type="text" required floatingLabel style="width:100%" [(ngModel)]="plmUom.name"
+      (keyup.enter)="add()">
+    </material-input>
+
+    <div footer>
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == true" (click)="add()" [disabled]="plmUom.code == null">
+        Create
+      </button>
+
+      <!-- <button class="w3-btn w3-green" *ngIf="plmUom.code != null" (click)="update()" [disabled]="plmUom.code == null">
+        Update
+      </button> -->
+      &nbsp;
+      <button class="w3-btn w3-red" (click)="showAddPlmUomDialog=false">
+        Close
+      </button>
+    </div>
+  </material-dialog>
+</modal>
+
+
+<br>
+
+
+<div class="w3-container">
+
+  <div class="w3-bar w3-theme w3-large">
+    <input #text class="w3-bar-item" type="text" placeholder="Search PlmUom.." 
+      (keyup.enter)="searchPlmUom(text.value)">
+    <button class="w3-bar-item w3-button" (click)="searchPlmUom(text.value)">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddPlmUomDialog=true;isAddNewRecord = true">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <br>
+
+  <p *ngIf="listPlmUom.isEmpty">
+    Nothing to do! Add PlmUom above.
+  </p>
+
+  <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" *ngIf="listPlmUom.isNotEmpty">
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let uom of listPlmUom; let i=index">
+      <td (click)="onSelect(uom)">
+        {{uom.code}}
+      </td>
+      <td (click)="onSelect(uom)">
+        {{uom.name}}
+      </td>
+      <td>
+        <material-fab mini (trigger)="remove(i)">
+          <material-icon icon="delete"></material-icon>
+        </material-fab>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <!-- paging -->
+  <div class="w3-center">
+    <div class="w3-bar" *ngIf="listPlmUom.isNotEmpty">
+      <a href="#" class="w3-button" (click)="prevPage()">&laquo;</a>
+      <a *ngFor="let page of pages; let i=index" (click)="goToPage(i+1)" class="w3-button"
+        [class.w3-gray]="current==(i+1)">{{i + 1}}</a>
+      <a href="#" class="w3-button" (click)="nextPage()">&raquo;</a>
+    </div>
+  </div>
+
+</div>

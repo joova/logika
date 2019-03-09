@@ -8,14 +8,14 @@ import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
 import 'package:logika/src/pagination_service.dart';
 
-import 'package:logika/src/plm_type/plm_type.dart';
+import 'package:logika/src/plm_uom/plm_uom.dart';
 
-import 'plm_type_service.dart';
+import 'plm_uom_service.dart';
 
 @Component(
-  selector: 'plm_type',
-  styleUrls: ['plm_type_component.css'],
-  templateUrl: 'plm_type_component.html',
+  selector: 'plm_uom',
+  styleUrls: ['plm_uom_component.css'],
+  templateUrl: 'plm_uom_component.html',
   directives: [
     AutoDismissDirective,
     AutoFocusDirective,
@@ -29,57 +29,57 @@ import 'plm_type_service.dart';
     NgIf,
   ],
   providers: [
-    ClassProvider(PlmTypeService),
+    ClassProvider(PlmUomService), 
     overlayBindings
   ],
 )
 
-class PlmTypeComponent implements OnInit {
-  final PlmTypeService plmTypeService;
+class PlmUomComponent implements OnInit {
+  final PlmUomService plmUomService;
 
-  List<PlmType> listPlmType = [];
-  PlmType plmType = new PlmType();
+  List<PlmUom> listPlmUom = [];
+  PlmUom plmUom = new PlmUom();
   String _text = "";
 
   int current = 1;
   int limit = 10;
   List pages;
 
-  bool showAddPlmTypeDialog = false;
+  bool showAddPlmUomDialog = false;
   bool isAddNewRecord = true;
 
-  PlmTypeComponent(this.plmTypeService);
+  PlmUomComponent(this.plmUomService);
 
   @override
   Future<Null> ngOnInit() async {
     var paging = await _goToPage(1);
     pages = new List(paging.getPage());
-    listPlmType = paging.getData();
+    listPlmUom = paging.getData();
   }
 
-  Future<Null> searchPlmType(String text) async {
+  Future<Null> searchPlmUom(String text) async {
     _text = text;
     var paging;
     if (_text != ""){
-      paging = await _searchPlmType(1);
+      paging = await _searchPlmUom(1);
     } else {
       paging = await _goToPage(1);
     }
     
     pages = new List(paging.getPage());
-    listPlmType = paging.getData();
+    listPlmUom = paging.getData();
   }
 
-  Future<Pagination> _searchPlmType(int page) async {
+  Future<Pagination> _searchPlmUom(int page) async {
     current = page;
     var offset = (page - 1) * limit;
-    var paging = await plmTypeService.search(_text, offset, limit);
+    var paging = await plmUomService.search(_text, offset, limit);
     return paging;
   }
 
   Future<Null> goToPage(int page) async {
     var paging = await _goToPage(page);
-    listPlmType = paging.getData();
+    listPlmUom = paging.getData();
   }
 
   Future<Null> prevPage() async {
@@ -87,7 +87,7 @@ class PlmTypeComponent implements OnInit {
       current--;
 
     var paging = await _goToPage(current);
-    listPlmType = paging.getData();
+    listPlmUom = paging.getData();
   }
 
   Future<Null> nextPage() async {
@@ -95,7 +95,7 @@ class PlmTypeComponent implements OnInit {
       current++;
 
     var paging = await _goToPage(current);
-    listPlmType = paging.getData();
+    listPlmUom = paging.getData();
   }
 
   Future<Pagination> _goToPage(int page) async {
@@ -103,41 +103,41 @@ class PlmTypeComponent implements OnInit {
     var offset = (page - 1) * limit;
     var paging;
     if (_text != ""){
-      paging = await plmTypeService.search(_text, offset, limit);
+      paging = await plmUomService.search(_text, offset, limit);
     } else {
-      paging = await plmTypeService.getPaging(offset, limit);
+      paging = await plmUomService.getPaging(offset, limit);
     }
     return paging;
   }
 
-  void onSelect(PlmType selected) {
-    plmType = selected;
-    print(plmType.code);
+  void onSelect(PlmUom selected) {
+    plmUom = selected;
+    print(plmUom.code);
 
     isAddNewRecord = false;
-    showAddPlmTypeDialog = true;
+    showAddPlmUomDialog = true;
 
   }
 
   Future<void> add() async {
-    var newPlmType = await plmTypeService.create(plmType);
+    var newPlmUom = await plmUomService.create(plmUom);
 
-    listPlmType.add(newPlmType);
-    plmType = new PlmType();
+    listPlmUom.add(newPlmUom);
+    plmUom = new PlmUom();
 
-    showAddPlmTypeDialog = false;
+    showAddPlmUomDialog = false;
   }
 
   Future<void> update() async {
-    await plmTypeService.update(plmType);
-    plmType = new PlmType();
+    await plmUomService.update(plmUom);
+    plmUom = new PlmUom();
 
-    showAddPlmTypeDialog = false;
+    showAddPlmUomDialog = false;
   }
 
-  PlmType remove(int index) {
-    plmType=listPlmType[index];
-    plmTypeService.delete(plmType);
-    return listPlmType.removeAt(index);
-  } 
+  PlmUom remove(int index) {
+    plmUom=listPlmUom[index];
+    plmUomService.delete(plmUom);
+    return listPlmUom.removeAt(index);
+  }
 }
