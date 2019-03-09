@@ -10,12 +10,7 @@ import 'package:logika/src/plm_uom/plm_uom.dart';
 @Injectable()
 class PlmUomService {
   static final _headers = {'Content-Type': 'application/json'};
-<<<<<<< HEAD
-  // static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web LOKAL
-   static const _plmUrl = 'http://192.168.100.35:8001/api/plm'; // URL to web API
-=======
   static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
->>>>>>> abca9532612084dce3d7c4e3a978533ef6c8f024
   final Client _http;
   
   PlmUomService(this._http);
@@ -114,8 +109,6 @@ class PlmUomService {
     }
   }
 
-<<<<<<< HEAD
-=======
   Future<void> delete(PlmUom plmUom) async {
     try {
       final url = '$_plmUrl/uom/${plmUom.code}';
@@ -125,7 +118,6 @@ class PlmUomService {
     }
   }
 
->>>>>>> abca9532612084dce3d7c4e3a978533ef6c8f024
   List<PlmUom> mockPlmUomList = plmUomList().toList();
   Future<List<PlmUom>> getPlmUomList() async => mockPlmUomList;
 }
