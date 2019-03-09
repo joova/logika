@@ -1,0 +1,34 @@
+table, td, th{  
+  border: 1px solid #ddd;
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background-color: #4CAF50;
+  color: white;
+}
+
+tr {
+  line-height: 2em;
+}
+
+tr:hover {
+  background-color: #EEEEEE;
+}
+
+/* tr material-checkbox {
+  vertical-align: middle;
+} */
+
+tr material-fab {
+  float: center;
+  vertical-align: middle;
+}
+
+.done {
+  text-decoration: line-through;
+}

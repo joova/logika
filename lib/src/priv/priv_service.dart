@@ -111,6 +111,16 @@ class PrivService {
     }
   }
 
+  Future<void> delete(Priv priv) async {
+    try {
+      final response = await _http.delete('$_idmUrl/priv/${priv.id}', headers: _headers );
+      
+      // return Priv.fromJson(_extractData(response));
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
 
    Future<List<Resource>> getResources() async {
     try {
@@ -125,12 +135,12 @@ class PrivService {
     }
   }
 
-  Future<List<Action>> getActions() async {
+  Future<List<IdmAction>> getActions() async {
     try {
       final response = await _http.get('$_idmUrl/actions');
       final data = _extractData(response) as List;
       final actions = (data)
-          .map((value) => Action.fromJson(value))
+          .map((value) => IdmAction.fromJson(value))
           .toList();
       return actions;
     } catch (e) {

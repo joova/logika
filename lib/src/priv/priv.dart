@@ -1,7 +1,10 @@
+import 'package:angular_components/model/ui/display_name.dart';
+
+
 class Priv {
   String id;
   Resource resource;
-  Action action;
+  IdmAction action;
 
 
   Priv({
@@ -14,7 +17,7 @@ class Priv {
     Priv(
       id: priv['id'], 
       resource: Resource.fromJson(priv['resource']),
-      action: Action.fromJson(priv['action']),
+      action: IdmAction.fromJson(priv['action']),
     );
 
   Map toJson() => {
@@ -24,12 +27,12 @@ class Priv {
     };
 }
 
-class Resource {
-  String id;
-  String name;
-  String uri;
+class Resource  implements HasUIDisplayName {
+  final String id;
+  final String name;
+  final String uri;
 
-   Resource({
+  const Resource({
     this.id, 
     this.name,
     this.uri,
@@ -42,23 +45,28 @@ class Resource {
       uri: res['uri']
     );
 
-  Map toJson() => {
-    // 'id': _id, 
-    'name': name
+    Map toJson() => {
+      'id': id, 
+      'name': name,
+      'uri': uri
     };
+
+  @override
+  String get uiDisplayName => name;
+  bool operator ==(Object other) => (other is Resource && this.id == other.id);
 }
 
-class Action {
-  String code;
-  String name;
+class IdmAction  implements HasUIDisplayName {
+  final String code;
+  final String name;
  
-   Action({
+  const IdmAction({
     this.code, 
     this.name
   });
 
-  factory Action.fromJson(Map<String, dynamic> act) => 
-    Action(
+  factory IdmAction.fromJson(Map<String, dynamic> act) => 
+    IdmAction(
       code: act['code'], 
       name: act['name']
     );
@@ -67,4 +75,9 @@ class Action {
     'code': code, 
     'name': name
     };
+
+  @override
+  String get uiDisplayName => name;
+
+  bool operator ==(Object other) => (other is IdmAction && this.code == other.code);
 }

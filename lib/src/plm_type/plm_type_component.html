@@ -1,0 +1,84 @@
+<modal [(visible)]="showAddPlmTypeDialog">
+  <material-dialog headered class="headered-dialog">
+    <div header>
+      <h1>Add/Edit Plm_type</h1>
+    </div>
+    <material-input label="Code" type="text" required autoFocus floatingLabel style="width:100%"
+      [(ngModel)]="plmType.code" (keyup.enter)="add()">
+    </material-input>
+    <material-input label="Name" type="text" required floatingLabel style="width:100%" [(ngModel)]="plmType.name"
+      (keyup.enter)="add()">
+    </material-input>
+
+    <div footer>
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == true" (click)="add()" [disabled]="plmType.name == null">
+        Create
+      </button>
+
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == false" (click)="update()"
+        [disabled]="plmType.name == null">
+        Update
+      </button>
+      &nbsp;
+      <button class="w3-btn w3-red" (click)="showAddPlmTypeDialog=false">
+        Close
+      </button>
+    </div>
+  </material-dialog>
+</modal>
+
+
+<br>
+
+
+<div class="w3-container">
+
+  <div class="w3-bar w3-theme w3-large">
+    <input #text class="w3-bar-item" type="text" placeholder="Search PlmType.."
+      (keyup.enter)="searchPlmType(text.value)">
+    <button class="w3-bar-item w3-button" (click)="searchPlmType(text.value)">
+      <i class="fa fa-search"></i>
+    </button>
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddPlmTypeDialog=true;isAddNewRecord = true">
+      <i class="fa fa-plus"></i>
+    </button>
+  </div>
+
+  <br>
+
+  <p *ngIf="listPlmType.isEmpty">
+    Nothing to do! Add PlmType above.
+  </p>
+
+  <table class="w3-table w3-striped w3-bordered w3-border w3-hoverable w3-white" *ngIf="listPlmType.isNotEmpty">
+    <tr>
+      <th>Code</th>
+      <th>Name</th>
+      <th>Delete</th>
+    </tr>
+    <tr *ngFor="let plmType of listPlmType; let i=index">
+      <td  (click)="onSelect(plmType)">
+        {{plmType.code}}
+      </td>
+      <td  (click)="onSelect(plmType)">
+        {{plmType.name}}
+      </td>
+      <td>
+        <material-fab mini (trigger)="remove(i)">
+          <material-icon icon="delete"></material-icon>
+        </material-fab>
+      </td>
+    </tr>
+  </table>
+  <br>
+  <!-- paging -->
+  <div class="w3-center">
+    <div class="w3-bar" *ngIf="listPlmType.isNotEmpty">
+      <a href="#" class="w3-button" (click)="prevPage()">&laquo;</a>
+      <a *ngFor="let page of pages; let i=index" (click)="goToPage(i+1)" class="w3-button"
+        [class.w3-gray]="current==(i+1)">{{i + 1}}</a>
+      <a href="#" class="w3-button" (click)="nextPage()">&raquo;</a>
+    </div>
+  </div>
+
+</div>
