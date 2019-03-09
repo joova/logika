@@ -109,6 +109,15 @@ class PlmUomService {
     }
   }
 
+  Future<void> delete(PlmUom plmUom) async {
+    try {
+      final url = '$_plmUrl/uom/${plmUom.code}';
+      final response = await _http.delete(url, headers: _headers);
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
   List<PlmUom> mockPlmUomList = plmUomList().toList();
   Future<List<PlmUom>> getPlmUomList() async => mockPlmUomList;
 }

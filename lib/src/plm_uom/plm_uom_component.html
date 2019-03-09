@@ -11,7 +11,7 @@
     </material-input>
 
     <div footer>
-      <button class="w3-btn w3-green" *ngIf="plmUom.code != null" (click)="add()" [disabled]="plmUom.code == null">
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == true" (click)="add()" [disabled]="plmUom.code == null">
         Create
       </button>
 
@@ -33,11 +33,12 @@
 <div class="w3-container">
 
   <div class="w3-bar w3-theme w3-large">
-    <input #text class="w3-bar-item" type="text" placeholder="Search PlmUom.." (keyup.enter)="searchPlmUom(text.value)">
+    <input #text class="w3-bar-item" type="text" placeholder="Search PlmUom.." 
+      (keyup.enter)="searchPlmUom(text.value)">
     <button class="w3-bar-item w3-button" (click)="searchPlmUom(text.value)">
       <i class="fa fa-search"></i>
     </button>
-    <button class="w3-bar-item w3-button w3-right" (click)="showAddPlmUomDialog=true">
+    <button class="w3-bar-item w3-button w3-right" (click)="showAddPlmUomDialog=true;isAddNewRecord = true">
       <i class="fa fa-plus"></i>
     </button>
   </div>
@@ -54,11 +55,11 @@
       <th>Name</th>
       <th>Delete</th>
     </tr>
-    <tr *ngFor="let uom of listPlmUom; let i=index" (click)="onSelect(uom)">
-      <td>
+    <tr *ngFor="let uom of listPlmUom; let i=index">
+      <td (click)="onSelect(uom)">
         {{uom.code}}
       </td>
-      <td>
+      <td (click)="onSelect(uom)">
         {{uom.name}}
       </td>
       <td>

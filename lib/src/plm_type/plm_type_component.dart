@@ -114,7 +114,7 @@ class PlmTypeComponent implements OnInit {
     plmType = selected;
     print(plmType.code);
 
-    isAddNewRecord =false;
+    isAddNewRecord = false;
     showAddPlmTypeDialog = true;
 
   }
