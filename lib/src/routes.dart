@@ -12,6 +12,7 @@ import 'plm_type/plm_type_component.template.dart' as plm_type_template;
 import 'setting/setting_component.template.dart' as setting_template;
 import 'role/role_component.template.dart' as role_template;
 import 'product/product_component.template.dart' as product_template;
+import 'plm_uom/plm_uom_component.template.dart' as plm_uom_template;
 
 export 'route_paths.dart';
 
@@ -69,6 +70,11 @@ class Routes {
     routePath: RoutePaths.product,
     component: product_template.ProductComponentNgFactory,
   );
+  
+  static final plm_uom = RouteDefinition(
+    routePath: RoutePaths.plm_uom,
+    component: plm_uom_template.PlmUomComponentNgFactory,
+  );
 
 
   static final all = <RouteDefinition>[
@@ -80,8 +86,9 @@ class Routes {
     plm_type,
     resource,
     setting,
-    plm_category,
     role,
     product,
+    plm_uom,
+    plm_category
   ];
 }
