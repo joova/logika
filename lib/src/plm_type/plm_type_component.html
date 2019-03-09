@@ -9,8 +9,8 @@
     <material-input label="Name" type="text" required floatingLabel style="width:100%" [(ngModel)]="plmType.name"
       (keyup.enter)="add()">
     </material-input>
-
     <div footer>
+      
       <button class="w3-btn w3-green" *ngIf="isAddNewRecord == true" (click)="add()" [disabled]="plmType.name == null">
         Create
       </button>
