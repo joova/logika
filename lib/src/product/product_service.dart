@@ -10,14 +10,15 @@ import 'package:logika/src/product/product.dart';
 @Injectable()
 class ProductService {
   static final _headers = {'Content-Type': 'application/json'};
-  static const _idmUrl = 'http://localhost:8001/api/'; // URL to web API
+  // static const _plmUrl = 'http://localhost:8001/api/plm'; // URL to web API
+  static const _plmUrl = 'http://192.168.100.35:8001/api/plm'; // URL to web API
   final Client _http;
   
   ProductService(this._http);
 
   Future<List<Product>> getAll() async {
     try {
-      final response = await _http.get('$_idmUrl/products');
+      final response = await _http.get('$_plmUrl/products');
       final data = _extractData(response) as List;
       final products = (data)
           .map((value) => Product.fromJson(value))
@@ -30,7 +31,7 @@ class ProductService {
 
   Future<Pagination> getPaging(int off, int lmt) async {
     try {
-      final response = await _http.get('$_idmUrl/products/$off/$lmt');
+      final response = await _http.get('$_plmUrl/products/$off/$lmt');
       
       final data = _extractData(response) as List;
       if(data == null) {
@@ -56,7 +57,7 @@ class ProductService {
 
   Future<Pagination> search(String text, int off, int lmt) async {
     try {
-      final response = await _http.get('$_idmUrl/products/$off/$lmt/$text');
+      final response = await _http.get('$_plmUrl/products/$off/$lmt/$text');
       
       final data = _extractData(response) as List;
       final products = (data).map((value) => Product.fromJson(value)).toList();
@@ -77,7 +78,7 @@ class ProductService {
 
   Future<Product> get(String id) async {
     try {
-      final response = await _http.get('$_idmUrl/product/$id');
+      final response = await _http.get('$_plmUrl/product/$id');
       
       return Product.fromJson(_extractData(response));
     } catch (e) {
@@ -89,7 +90,7 @@ class ProductService {
     print(json.encode(product));
     try {
       final response = await _http.post(
-        '$_idmUrl/product',
+        '$_plmUrl/product',
         headers: _headers, 
         body: json.encode(product),
       );
@@ -101,9 +102,57 @@ class ProductService {
 
   Future<Product> update(Product product) async {
     try {
-      final url = '$_idmUrl/product/${product.id}';
+      final url = '$_plmUrl/product/${product.id}';
       final response = await _http.put(url, headers: _headers, body: json.encode(product));
       return Product.fromJson(_extractData(response));
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+  Future<void> delete(Product product) async {
+    try {
+      final url = '$_plmUrl/product/${product.id}';
+      final response = await _http.delete(url, headers: _headers);
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+   Future<List<UOM>> getUoms() async {
+    try {
+      final response = await _http.get('$_plmUrl/uoms');
+      final data = _extractData(response) as List;
+      final uoms = (data)
+          .map((value) => UOM.fromJson(value))
+          .toList();
+      return uoms;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+   Future<List<PlmCategory>> getCategories() async {
+    try {
+      final response = await _http.get('$_plmUrl/categories');
+      final data = _extractData(response) as List;
+      final categories = (data)
+          .map((value) => PlmCategory.fromJson(value))
+          .toList();
+      return categories;
+    } catch (e) {
+      throw _handleError(e);
+    }
+  }
+
+   Future<List<PlmType>> getTypes() async {
+    try {
+      final response = await _http.get('$_plmUrl/types');
+      final data = _extractData(response) as List;
+      final types = (data)
+          .map((value) => PlmType.fromJson(value))
+          .toList();
+      return types;
     } catch (e) {
       throw _handleError(e);
     }

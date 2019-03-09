@@ -6,6 +6,11 @@ import 'package:angular_components/auto_dismiss/auto_dismiss.dart';
 import 'package:angular_components/focus/focus.dart';
 import 'package:angular_components/laminate/components/modal/modal.dart';
 import 'package:angular_components/material_dialog/material_dialog.dart';
+import 'package:angular_components/material_select/display_name.dart';
+import 'package:angular_components/material_select/material_select.dart';
+import 'package:angular_components/material_select/material_select_item.dart';
+import 'package:angular_components/model/selection/selection_model.dart';
+import 'package:angular_components/model/selection/selection_options.dart';
 import 'package:logika/src/pagination_service.dart';
 
 import 'package:logika/src/product/product.dart';
@@ -17,9 +22,12 @@ import 'product_service.dart';
   styleUrls: ['product_component.css'],
   templateUrl: 'product_component.html',
   directives: [
+    displayNameRendererDirective,
     AutoDismissDirective,
     AutoFocusDirective,
     MaterialCheckboxComponent,
+    MaterialSelectComponent,
+    MaterialSelectItemComponent,
     MaterialFabComponent,
     MaterialIconComponent,
     MaterialDialogComponent,
@@ -28,14 +36,16 @@ import 'product_service.dart';
     NgFor,
     NgIf,
   ],
-  providers: [
-    ClassProvider(ProductService), 
-    overlayBindings
-  ],
+  providers: [ClassProvider(ProductService), overlayBindings],
 )
-
 class ProductComponent implements OnInit {
   final ProductService productService;
+
+
+  // data variable
+  static List<UOM> listUom = [];
+  static List<PlmType> listPlmType = [];
+  static List<PlmCategory> listPlmCategory = [];
 
   List<Product> listProduct = [];
   Product product = new Product();
@@ -46,6 +56,17 @@ class ProductComponent implements OnInit {
   List pages;
 
   bool showAddProductDialog = false;
+  bool isAddNewRecord = true;
+
+  // selection component
+  SelectionModel<UOM> uomSelection = SelectionModel.single();
+  SelectionOptions<UOM> uomOptions;
+
+  SelectionModel<PlmType> plmTypeSelection = SelectionModel.single();
+  SelectionOptions<PlmType> plmTypeOptions;
+
+  SelectionModel<PlmCategory> plmCategorySelection = SelectionModel.single();
+  SelectionOptions<PlmCategory> plmCategoryOptions;
 
   ProductComponent(this.productService);
 
@@ -54,17 +75,25 @@ class ProductComponent implements OnInit {
     var paging = await _goToPage(1);
     pages = new List(paging.getPage());
     listProduct = paging.getData();
+
+    listUom = await productService.getUoms();
+    listPlmCategory = await productService.getCategories();
+    listPlmType = await productService.getTypes();
+
+    uomOptions = SelectionOptions.fromList(listUom);
+    plmTypeOptions = SelectionOptions.fromList(listPlmType);
+    plmCategoryOptions = SelectionOptions.fromList(listPlmCategory);
   }
 
   Future<Null> searchProduct(String text) async {
     _text = text;
     var paging;
-    if (_text != ""){
+    if (_text != "") {
       paging = await _searchProduct(1);
     } else {
       paging = await _goToPage(1);
     }
-    
+
     pages = new List(paging.getPage());
     listProduct = paging.getData();
   }
@@ -82,16 +111,14 @@ class ProductComponent implements OnInit {
   }
 
   Future<Null> prevPage() async {
-    if(current > 1)
-      current--;
+    if (current > 1) current--;
 
     var paging = await _goToPage(current);
     listProduct = paging.getData();
   }
 
   Future<Null> nextPage() async {
-    if(current < pages.length)
-      current++;
+    if (current < pages.length) current++;
 
     var paging = await _goToPage(current);
     listProduct = paging.getData();
@@ -101,7 +128,7 @@ class ProductComponent implements OnInit {
     current = page;
     var offset = (page - 1) * limit;
     var paging;
-    if (_text != ""){
+    if (_text != "") {
       paging = await productService.search(_text, offset, limit);
     } else {
       paging = await productService.getPaging(offset, limit);
@@ -115,7 +142,12 @@ class ProductComponent implements OnInit {
     showAddProductDialog = true;
   }
 
-  Future<void> add() async {
+  Future<void> add() async { 
+    product.uom = uomSelection.selectedValues.first;
+    product.type = plmTypeSelection.selectedValues.first;
+    product.category = plmCategorySelection.selectedValues.first;
+    
+    print(product);
     var newProduct = await productService.create(product);
 
     listProduct.add(newProduct);
@@ -131,5 +163,9 @@ class ProductComponent implements OnInit {
     showAddProductDialog = false;
   }
 
-  Product remove(int index) => listProduct.removeAt(index);
+  Product remove(int index) {
+    product = listProduct[index];
+    productService.delete(product);
+    return listProduct.removeAt(index);
+  }
 }
