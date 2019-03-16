@@ -110,6 +110,7 @@ class ProductService {
     }
   }
 
+
   Future<void> delete(Product product) async {
     try {
       final url = '$_plmUrl/product/${product.id}';
