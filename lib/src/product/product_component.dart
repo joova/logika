@@ -140,14 +140,14 @@ class ProductComponent implements OnInit {
     product = selected;
     // print(product.id);
     showAddProductDialog = true;
+    isAddNewRecord = false;
   }
 
   Future<void> add() async { 
     product.uom = uomSelection.selectedValues.first;
     product.type = plmTypeSelection.selectedValues.first;
     product.category = plmCategorySelection.selectedValues.first;
-    
-    print(product);
+    // print(product);
     var newProduct = await productService.create(product);
 
     listProduct.add(newProduct);
@@ -155,14 +155,20 @@ class ProductComponent implements OnInit {
 
     showAddProductDialog = false;
   }
+  
 
   Future<void> update() async {
+
+    product.uom = uomSelection.selectedValues.first;
+    product.category= plmCategorySelection.selectedValues.first;
+    product.type= plmTypeSelection.selectedValues.first;
+
     await productService.update(product);
     product = new Product();
 
     showAddProductDialog = false;
   }
-
+  
   Product remove(int index) {
     product = listProduct[index];
     productService.delete(product);
