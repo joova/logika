@@ -113,14 +113,12 @@ class PrivService {
 
   Future<void> delete(Priv priv) async {
     try {
-      final response = await _http.delete('$_idmUrl/priv/${priv.id}', headers: _headers );
-      
-      // return Priv.fromJson(_extractData(response));
+      final url = '$_idmUrl/priv/${priv.id}';
+      final response = await _http.delete(url, headers: _headers);
     } catch (e) {
       throw _handleError(e);
     }
   }
-
 
    Future<List<Resource>> getResources() async {
     try {
