@@ -37,7 +37,7 @@ class Routes {
     component: act_template.ActComponentNgFactory,
   );
   static final plm_category = RouteDefinition(
-    routePath: RoutePaths.plmCategory,
+    routePath: RoutePaths.plm_category,
     component: plm_category_template.PlmCategoryComponentNgFactory,
   );
 
