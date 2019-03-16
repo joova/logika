@@ -4,10 +4,10 @@
 </header>
 
 <div class="w3-row-padding w3-margin-bottom">
-    <div class="w3-quarter">
+    <div class="w3-quarter w3-padding-16">
         <a [routerLink]="RoutePaths.user.toUrl()">
             <div class="w3-container w3-orange w3-text-white w3-padding-16">
-                <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
+                <div class="w3-left"><i class="fa fa-user w3-xxxlarge"></i></div>
                 <div class="w3-right">
                     <h3>50</h3>
                 </div>
@@ -16,7 +16,7 @@
             </div>
         </a>
     </div>
-    <div class="w3-quarter">
+    <div class="w3-quarter w3-padding-16">
         <a [routerLink]="RoutePaths.org.toUrl()">
         <div class="w3-container w3-red w3-padding-16">
             <div class="w3-left"><i class="fa fa-comment w3-xxxlarge"></i></div>
@@ -28,25 +28,71 @@
         </div>
         </a>
     </div>
-    <div class="w3-quarter">
-        <div class="w3-container w3-blue w3-padding-16">
-            <div class="w3-left"><i class="fa fa-eye w3-xxxlarge"></i></div>
+
+    <div class="w3-quarter w3-padding-16">
+        <a [routerLink]="RoutePaths.role.toUrl()">
+        <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left"><i class="fa fa-users w3-xxxlarge"></i></div>
             <div class="w3-right">
-                <h3>99</h3>
+                <h3>52</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Views</h4>
+            <h4>Grup</h4>
         </div>
+        </a>
     </div>
-    <div class="w3-quarter">
-        <div class="w3-container w3-teal w3-padding-16">
-            <div class="w3-left"><i class="fa fa-share-alt w3-xxxlarge"></i></div>
+
+    <div class="w3-quarter w3-padding-16">
+        <a [routerLink]="RoutePaths.product.toUrl()">
+        <div class="w3-container w3-red w3-padding-16">
+            <div class="w3-left"><i class="fa fa-cubes w3-xxxlarge"></i></div>
             <div class="w3-right">
-                <h3>23</h3>
+                <h3>52</h3>
             </div>
             <div class="w3-clear"></div>
-            <h4>Shares</h4>
+            <h4>Products</h4>
         </div>
+        </a>
+    </div>
+
+    <div class="w3-quarter w3-padding-16">
+        <a [routerLink]="RoutePaths.plm_type.toUrl()">
+        <div class="w3-container w3-teal w3-padding-16">
+            <div class="w3-left"><i class="fa fa-tags w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>52</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Product Type</h4>
+        </div>
+        </a>
+    </div>
+
+    <div class="w3-quarter w3-padding-16">
+        <a [routerLink]="RoutePaths.plm_category.toUrl()">
+        <div class="w3-container w3-teal w3-padding-16">
+            <div class="w3-left"><i class="fa fa-folder-open w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>52</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>Product Category</h4>
+        </div>
+        </a>
+    </div>
+
+
+    <div class="w3-quarter w3-padding-16">
+        <a [routerLink]="RoutePaths.plm_uom.toUrl()">
+        <div class="w3-container w3-blue w3-padding-16">
+            <div class="w3-left"><i class="fa fa-thermometer-2 w3-xxxlarge"></i></div>
+            <div class="w3-right">
+                <h3>52</h3>
+            </div>
+            <div class="w3-clear"></div>
+            <h4>UOM</h4>
+        </div>
+        </a>
     </div>
 </div>
 
