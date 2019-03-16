@@ -15,9 +15,9 @@
         Create
       </button>
 
-      <!-- <button class="w3-btn w3-green" *ngIf="plmUom.code != null" (click)="update()" [disabled]="plmUom.code == null">
+      <button class="w3-btn w3-green" *ngIf="isAddNewRecord == false" (click)="update()" [disabled]="plmUom.code == null">
         Update
-      </button> -->
+      </button>
       &nbsp;
       <button class="w3-btn w3-red" (click)="showAddPlmUomDialog=false">
         Close
